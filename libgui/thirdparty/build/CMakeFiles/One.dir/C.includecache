@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/freeglut-3.0.0/include/GL/freeglut.h
+freeglut_std.h
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/freeglut-3.0.0/include/GL/freeglut_std.h
+freeglut_ext.h
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/freeglut-3.0.0/include/GL/freeglut_ext.h
+
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/freeglut-3.0.0/include/GL/freeglut_ext.h
+stdarg.h
+-
+
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/freeglut-3.0.0/include/GL/freeglut_std.h
+windows.h
+-
+EGL/egl.h
+-
+GLES/gl.h
+-
+GLES2/gl2.h
+-
+OpenGL/gl.h
+-
+OpenGL/glu.h
+-
+GL/gl.h
+-
+GL/glu.h
+-
+stdlib.h
+-
+
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/freeglut-3.0.0/progs/demos/One/one.c
+stdio.h
+-
+stdlib.h
+-
+GL/freeglut.h
+-
+

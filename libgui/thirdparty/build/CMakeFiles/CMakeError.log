@@ -1,0 +1,50 @@
+Determining if files usbhid.h exist failed with the following output:
+Change Dir: /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_21372/fast"
+make[2] : on entre dans le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+/usr/bin/make -f CMakeFiles/cmTC_21372.dir/build.make CMakeFiles/cmTC_21372.dir/build
+make[3] : on entre dans le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+Building C object CMakeFiles/cmTC_21372.dir/CheckIncludeFiles.c.o
+/usr/bin/cc   -Wall -pedantic    -o CMakeFiles/cmTC_21372.dir/CheckIncludeFiles.c.o   -c /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: usbhid.h: Aucun fichier ou dossier de ce type
+ #include <usbhid.h>
+          ^~~~~~~~~~
+compilation terminated.
+CMakeFiles/cmTC_21372.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_21372.dir/CheckIncludeFiles.c.o' failed
+make[3]: *** [CMakeFiles/cmTC_21372.dir/CheckIncludeFiles.c.o] Error 1
+make[3] : on quitte le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+Makefile:126: recipe for target 'cmTC_21372/fast' failed
+make[2]: *** [cmTC_21372/fast] Error 2
+make[2] : on quitte le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+
+Source:
+/* */
+#include <usbhid.h>
+
+
+int main(void){return 0;}
+
+Determining if the function XParseGeometry exists failed with the following output:
+Change Dir: /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3e955/fast"
+make[2] : on entre dans le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+/usr/bin/make -f CMakeFiles/cmTC_3e955.dir/build.make CMakeFiles/cmTC_3e955.dir/build
+make[3] : on entre dans le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+Building C object CMakeFiles/cmTC_3e955.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -Wall -pedantic -DCHECK_FUNCTION_EXISTS=XParseGeometry   -o CMakeFiles/cmTC_3e955.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_3e955
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3e955.dir/link.txt --verbose=1
+/usr/bin/cc  -Wall -pedantic -DCHECK_FUNCTION_EXISTS=XParseGeometry    -rdynamic CMakeFiles/cmTC_3e955.dir/CheckFunctionExists.c.o  -o cmTC_3e955 -lm 
+CMakeFiles/cmTC_3e955.dir/CheckFunctionExists.c.o : Dans la fonction « main » :
+CheckFunctionExists.c:(.text+0x10) : référence indéfinie vers « XParseGeometry »
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_3e955.dir/build.make:97: recipe for target 'cmTC_3e955' failed
+make[3]: *** [cmTC_3e955] Error 1
+make[3] : on quitte le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+Makefile:126: recipe for target 'cmTC_3e955/fast' failed
+make[2]: *** [cmTC_3e955/fast] Error 2
+make[2] : on quitte le répertoire « /media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/CMakeFiles/CMakeTmp »
+
+

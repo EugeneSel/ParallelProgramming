@@ -1,0 +1,10 @@
+prefix=/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/../../..
+libdir=/media/eugene/Work/ENSTA/IN203_Architectures_Parallèles/Promotion_2021/TravauxPratiques/Projet/Projet_land_ants/libgui/thirdparty/build/../../../lib
+includedir=${prefix}/include
+
+Name: glut
+Description: A freely licensed and improved alternative to the GLUT library
+Version: 3.0.0
+Libs: -L${libdir} -lglut
+Libs.private: -lX11 -lXxf86vm -lXrandr -lGL -lm
+Cflags: -I${includedir} 
