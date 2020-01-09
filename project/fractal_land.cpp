@@ -32,7 +32,7 @@ fractal_land::fractal_land( const dim_t& ln2_dim, unsigned long nbSeeds, double 
     container(m_dimensions*m_dimensions).swap(m_altitude);
 
     std::random_device rd;
-    std::mt19937 gen(rd());
+    std::mt19937 gen(20); // static map
 
     // Seed the engine with an unsigned int
     gen.seed(seed);

@@ -12,32 +12,58 @@
 # include "gui/quad.hpp"
 # include "gui/event_manager.hpp"
 # include "display.hpp"
+#include <chrono>
+
+using namespace std;
+
+# define _clock_advance_
+# define _clock_display_
 
 void advance_time( const fractal_land& land, pheromone& phen, 
                    const position_t& pos_nest, const position_t& pos_food,
                    std::vector<ant>& ants, std::size_t& cpteur )
 {
+    // chronometre:
+    chrono::time_point<std::chrono::system_clock> start, end;
+    chrono::duration<double> elapsed_seconds;
+
+    // start clock:
+    start = chrono::system_clock::now();
+
     for ( size_t i = 0; i < ants.size(); ++i )
         ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
     phen.do_evaporation();
     phen.update();
+
+    // end clock:
+    end = chrono::system_clock::now();
+
+    // count the difference:
+    # ifdef _clock_advance_
+    elapsed_seconds = end - start;
+    cout << "Advance time: " << elapsed_seconds.count() << endl;
+    # endif
 }
 
 int main(int nargs, char* argv[])
 {
+    // chronometre:
+    chrono::time_point<std::chrono::system_clock> start, end, start_general, end_general;
+    chrono::duration<double> elapsed_seconds;
+
     const int nb_ants = 5000; // Nombre de fourmis
     const double eps = 0.8;  // Coefficient d'exploration
     const double alpha=0.7; // Coefficient de chaos
     //const double beta=0.9999; // Coefficient d'évaporation
     const double beta=0.999; // Coefficient d'évaporation
     // Location du nid
-    position_t pos_nest{256,256};
-    //const int i_nest = 256, j_nest = 256;
+    position_t pos_nest{128,128};
+    //const int i_nest = 128, j_nest = 128;
     // Location de la nourriture
-    position_t pos_food{500,500};
-    //const int i_food = 500, j_food = 500;    
-    // Génération du territoire 512 x 512 ( 2*(2^8) par direction )
-    fractal_land land(8,2,1.,1024);
+    position_t pos_food{240,240};
+    //const int i_food = 240, j_food = 240;    
+    // Génération du territoire 256 x 256 ( 2*(2^7) par direction )
+    fractal_land land(7,2,1.,512);
     double max_val = 0.0;
     double min_val = 0.0;
     for ( fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
@@ -72,11 +98,53 @@ int main(int nargs, char* argv[])
     size_t food_quantity = 0;
 
     gui::event_manager manager;
+    // start general clock: 
+    start_general = chrono::system_clock::now();
+
+    // exit window:
     manager.on_key_event(int('q'), [] (int code) { exit(0); });
+    
+    // general timer:
+    manager.on_key_event(int('t'), [&] (int code) { 
+        // end general clock:
+        end_general = chrono::system_clock::now();
+
+        // count the difference:
+        elapsed_seconds = end_general - start_general;
+        cout << "General time since the beginning: " << elapsed_seconds.count() << endl;
+    });
+
+    // initialisation of the land:
     manager.on_display([&] { displayer.display(food_quantity); win.blit(); });
+    
+    // when we want to advance:
     manager.on_idle([&] () { 
         advance_time(land, phen, pos_nest, pos_food, ants, food_quantity);
-        displayer.display(food_quantity); 
+        
+        // start clock:
+        start = chrono::system_clock::now();
+        displayer.display(food_quantity);        
+        // end clock:
+        end = chrono::system_clock::now();
+
+        // count the difference:
+        # ifdef _clock_display_
+        elapsed_seconds = end - start;
+        cout << "Display time: " << elapsed_seconds.count() << endl;
+        # endif
+
+        // the end condition:
+        if (food_quantity >= 100) {
+            // end general clock:
+            end_general = chrono::system_clock::now();
+
+            // count the difference:
+            elapsed_seconds = end_general - start_general;
+            cout << "General time since the beginning: " << elapsed_seconds.count() << endl;
+
+            exit(0);
+        }
+
         win.blit(); 
     });
     manager.loop();
