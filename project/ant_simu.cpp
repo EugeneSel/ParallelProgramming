@@ -16,6 +16,7 @@
 
 using namespace std;
 
+# define _OMP_dynamic_
 # define _clock_advance_
 # define _clock_display_
 
@@ -30,11 +31,46 @@ void advance_time( const fractal_land& land, pheromone& phen,
     // start clock:
     start = chrono::system_clock::now();
 
+    // parallel OMP static default:
+    # ifdef _OMP_static_
+    #pragma omp parallel for schedule(static)
     for ( size_t i = 0; i < ants.size(); ++i )
         ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
-    phen.do_evaporation();
-    phen.update();
+    # endif
 
+    // parallel OMP dynamic default:
+    # ifdef _OMP_dynamic_
+    #pragma omp parallel for schedule(dynamic)
+    for ( size_t i = 0; i < ants.size(); ++i )
+        ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
+    # endif
+
+    // parallel OMP with a static schedule and defined step size:
+    # ifdef _OMP_static_with_step_
+    unsigned number_of_ants = ants.size();
+    unsigned number_of_threads;
+    # pragma omp parallel shared(number_of_threads)
+    {
+        number_of_threads = omp_get_num_threads();
+        # pragma omp for schedule(static, number_of_ants / number_of_threads)
+        for ( size_t i = 0; i < number_of_ants; ++i )
+            ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
+    }
+    # endif
+
+    // parallel OMP with a dynamic schedule and defined step size:
+    # ifdef _OMP_dynamic_with_step_
+    unsigned number_of_ants = ants.size();
+    unsigned number_of_threads;
+    # pragma omp parallel shared(number_of_threads)
+    {
+        number_of_threads = omp_get_num_threads();
+        # pragma omp for schedule(dynamic, number_of_ants / number_of_threads)
+        for ( size_t i = 0; i < number_of_ants; ++i )
+            ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
+    }
+    # endif
+    
     // end clock:
     end = chrono::system_clock::now();
 
@@ -43,6 +79,9 @@ void advance_time( const fractal_land& land, pheromone& phen,
     elapsed_seconds = end - start;
     cout << "Advance time: " << elapsed_seconds.count() << endl;
     # endif
+
+    phen.do_evaporation();
+    phen.update();
 }
 
 int main(int nargs, char* argv[])
