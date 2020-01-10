@@ -16,8 +16,8 @@
 
 using namespace std;
 
-# define _clock_advance_
-# define _clock_display_
+// # define _clock_advance_
+// # define _clock_display_
 
 void advance_time( const fractal_land& land, pheromone& phen, 
                    const position_t& pos_nest, const position_t& pos_food,
@@ -51,10 +51,9 @@ int main(int nargs, char* argv[])
     chrono::time_point<std::chrono::system_clock> start, end, start_general, end_general;
     chrono::duration<double> elapsed_seconds;
 
-    const int nb_ants = 5000; // Nombre de fourmis
+    const int nb_ants = 2000; // Nombre de fourmis
     const double eps = 0.8;  // Coefficient d'exploration
     const double alpha=0.7; // Coefficient de chaos
-    //const double beta=0.9999; // Coefficient d'évaporation
     const double beta=0.999; // Coefficient d'évaporation
     // Location du nid
     position_t pos_nest{128,128};
@@ -84,7 +83,7 @@ int main(int nargs, char* argv[])
     std::vector<ant> ants;
     ants.reserve(nb_ants);
     std::random_device                       rd;  // Will be used to obtain a seed for the random number engine
-    std::mt19937                             gen( rd( ) );  // Standard mersenne_twister_engine seeded with rd()
+    std::mt19937                             gen(20);  // Standard mersenne_twister_engine seeded with rd()
     std::uniform_int_distribution<size_t>    ant_pos( 0, land.dimensions()-1 );
     for ( size_t i = 0; i < nb_ants; ++i )
         ants.push_back({{ant_pos(gen),ant_pos(gen)}});
