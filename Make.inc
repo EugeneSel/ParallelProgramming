@@ -5,7 +5,7 @@ PROJECT_ROOT = $(CURDIR)/..
 #/home/juvigny/Documents/Cours/Paris6/2018/simants_project
 # /home/juvigny/Cours.d/ParisVI/2017/simants_project
 # VOTRE COMPILATEUR PREFERE ( POUR PARIS 6, g++ suffira normalement )
-CXX = g++
+CXX = mpic++
 DEBUGOPT = -g -Wall -pedantic -fopenmp
 OPTIMOPT = -O2 -march=native -fopenmp
 

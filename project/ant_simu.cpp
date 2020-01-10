@@ -13,6 +13,7 @@
 # include "gui/event_manager.hpp"
 # include "display.hpp"
 #include <chrono>
+#include "mpi.h"
 
 using namespace std;
 
@@ -45,39 +46,9 @@ void advance_time( const fractal_land& land, pheromone& phen,
     # endif
 }
 
-int main(int nargs, char* argv[])
-{
-    // chronometre:
-    chrono::time_point<std::chrono::system_clock> start, end, start_general, end_general;
-    chrono::duration<double> elapsed_seconds;
-
-    const int nb_ants = 5000; // Nombre de fourmis
+int main(int nargs, char* argv[]) {
     const double eps = 0.8;  // Coefficient d'exploration
-    const double alpha=0.7; // Coefficient de chaos
-    //const double beta=0.9999; // Coefficient d'évaporation
-    const double beta=0.999; // Coefficient d'évaporation
-    // Location du nid
-    position_t pos_nest{128,128};
-    //const int i_nest = 128, j_nest = 128;
-    // Location de la nourriture
-    position_t pos_food{240,240};
-    //const int i_food = 240, j_food = 240;    
-    // Génération du territoire 256 x 256 ( 2*(2^7) par direction )
-    fractal_land land(7,2,1.,512);
-    double max_val = 0.0;
-    double min_val = 0.0;
-    for ( fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
-        for ( fractal_land::dim_t j = 0; j < land.dimensions(); ++j ) {
-            max_val = std::max(max_val, land(i,j));
-            min_val = std::min(min_val, land(i,j));
-        }
-    double delta = max_val - min_val;
-    /* On redimensionne les valeurs de fractal_land de sorte que les valeurs
-    soient comprises entre zéro et un */
-    for ( fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
-        for ( fractal_land::dim_t j = 0; j < land.dimensions(); ++j )  {
-            land(i,j) = (land(i,j)-min_val)/delta;
-        }
+
     // Définition du coefficient d'exploration de toutes les fourmis.
     ant::set_exploration_coef(eps);
     // On va créer des fourmis un peu partout sur la carte :
@@ -91,63 +62,108 @@ int main(int nargs, char* argv[])
     // On crée toutes les fourmis dans la fourmilière.
     pheromone phen(land.dimensions(), pos_food, pos_nest, alpha, beta);
 
-    gui::context graphic_context(nargs, argv);
-    gui::window& win =  graphic_context.new_window(2*land.dimensions()+10,land.dimensions()+266);
-    display_t displayer( land, phen, pos_nest, pos_food, ants, win );
+    const int nb_ants = 2000; // Nombre de fourmis
+
+    const double alpha=0.7; // Coefficient de chaos
+    const double beta=0.999; // Coefficient d'évaporation
+    // Location du nid
+    position_t pos_nest{128,128};
+    // const int i_nest = 128, j_nest = 128;
+    // Location de la nourriture
+    position_t pos_food{240,240};
+    // const int i_food = 240, j_food = 240;    
+    // Génération du territoire 256 x 256 ( 2*(2^7) par direction )
+    fractal_land land(7,2,1.,512);
+
     // Compteur de la quantité de nourriture apportée au nid par les fourmis
     size_t food_quantity = 0;
 
-    gui::event_manager manager;
-    // start general clock: 
-    start_general = chrono::system_clock::now();
-
-    // exit window:
-    manager.on_key_event(int('q'), [] (int code) { exit(0); });
+    MPI_Init(&nargs, &argv);
     
-    // general timer:
-    manager.on_key_event(int('t'), [&] (int code) { 
-        // end general clock:
-        end_general = chrono::system_clock::now();
+    int rank, process_number;
 
-        // count the difference:
-        elapsed_seconds = end_general - start_general;
-        cout << "General time since the beginning: " << elapsed_seconds.count() << endl;
-    });
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &process_number);
 
-    // initialisation of the land:
-    manager.on_display([&] { displayer.display(food_quantity); win.blit(); });
-    
-    // when we want to advance:
-    manager.on_idle([&] () { 
-        advance_time(land, phen, pos_nest, pos_food, ants, food_quantity);
-        
-        // start clock:
-        start = chrono::system_clock::now();
-        displayer.display(food_quantity);        
-        // end clock:
-        end = chrono::system_clock::now();
+    if (rank == 0) {
+        // chronometre:
+        chrono::time_point<std::chrono::system_clock> start, end, start_general, end_general;
+        chrono::duration<double> elapsed_seconds;
 
-        // count the difference:
-        # ifdef _clock_display_
-        elapsed_seconds = end - start;
-        cout << "Display time: " << elapsed_seconds.count() << endl;
-        # endif
+        double max_val = 0.0;
+        double min_val = 0.0;
+        for ( fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
+            for ( fractal_land::dim_t j = 0; j < land.dimensions(); ++j ) {
+                max_val = std::max(max_val, land(i,j));
+                min_val = std::min(min_val, land(i,j));
+            }
+        double delta = max_val - min_val;
+        /* On redimensionne les valeurs de fractal_land de sorte que les valeurs
+        soient comprises entre zéro et un */
+        for ( fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
+            for ( fractal_land::dim_t j = 0; j < land.dimensions(); ++j )  {
+                land(i,j) = (land(i,j)-min_val)/delta;
+            }
 
-        // the end condition:
-        if (food_quantity >= 100) {
+        gui::context graphic_context(nargs, argv);
+        gui::window& win =  graphic_context.new_window(2*land.dimensions()+10,land.dimensions()+266);
+        display_t displayer( land, phen, pos_nest, pos_food, ants, win );
+
+        gui::event_manager manager;
+        // start general clock: 
+        start_general = chrono::system_clock::now();
+
+        manager.on_key_event(int('q'), [] (int code) { 
+            MPI_Finalize();
+            exit(0); 
+        }); // key pressed handler
+
+        // general timer:
+        manager.on_key_event(int('t'), [&] (int code) { 
             // end general clock:
             end_general = chrono::system_clock::now();
 
             // count the difference:
             elapsed_seconds = end_general - start_general;
             cout << "General time since the beginning: " << elapsed_seconds.count() << endl;
+        });
 
-            exit(0);
-        }
+        // initialisation of the land:
+        manager.on_display([&] { displayer.display(food_quantity); win.blit(); });
 
-        win.blit(); 
-    });
-    manager.loop();
+        // when we want to advance:
+        manager.on_idle([&] () {
+            MPI_Send(&count_task, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+
+            // start clock:
+            start = chrono::system_clock::now();
+            displayer.display(food_quantity);        
+            // end clock:
+            end = chrono::system_clock::now();
+
+            // count the difference:
+            # ifdef _clock_display_
+            elapsed_seconds = end - start;
+            cout << "Display time: " << elapsed_seconds.count() << endl;
+            # endif
+
+            if (food_quantity >= 100) {
+                // end general clock:
+                end_general = chrono::system_clock::now();
+
+                // count the difference:
+                elapsed_seconds = end_general - start_general;
+                cout << "General time since the beginning: " << elapsed_seconds.count() << endl;
+            }
+
+            win.blit();
+        }); 
+
+        // loop this algorithm:
+        manager.loop();
+    } else if (rank != 0) {
+        advance_time(land, phen, pos_nest, pos_food, ants, food_quantity);
+    }
 
     return 0;
 }
