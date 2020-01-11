@@ -8,6 +8,8 @@
 #include <vector>
 #include "basic_types.hpp"
 
+using namespace std;
+
 /**
  * @brief Carte des phéronomes
  * @details Gère une carte des phéronomes avec leurs mis à jour ( dont l'évaporation )
@@ -103,6 +105,20 @@ public:
         cl_update( );
         m_map_of_pheromone[( m_pos_food.first + 1 ) * m_stride + m_pos_food.second + 1][0] = 1;
         m_map_of_pheromone[( m_pos_nest.first + 1 ) * m_stride + m_pos_nest.second + 1][1] = 1;
+    }
+
+    void update_map(const vector<double>& new_map) {
+        unsigned k = 0;
+
+        for (size_t i = 1; i <= m_dim; ++i)
+            for (size_t j = 1; j <= m_dim; ++j) {
+                m_map_of_pheromone[i * m_stride + j][0] = new_map[k];
+                m_map_of_pheromone[i * m_stride + j][1] = new_map[k + 1];
+
+                k += 2;
+            } 
+        
+
     }
 
 private:

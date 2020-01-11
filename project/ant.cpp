@@ -58,3 +58,8 @@ void ant::advance( pheromone& phen, const fractal_land& land, const position_t& 
         }
     }
 }
+
+void ant::set_position(const double& first, const double& second) {
+    m_position.first = first;
+    m_position.second = second;
+}

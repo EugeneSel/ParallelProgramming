@@ -23,6 +23,7 @@ public:
     void unset_loaded() { m_state = unloaded; }
 
     bool is_loaded() const { return m_state == loaded; }
+    void set_position(const double& first, const double& second);
     const position_t& get_position() const { return m_position; }
     static void set_exploration_coef(double eps) { m_eps = eps; }
 
