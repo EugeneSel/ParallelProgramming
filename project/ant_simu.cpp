@@ -13,7 +13,6 @@
 # include "gui/event_manager.hpp"
 # include "display.hpp"
 #include <chrono>
-#include "omp.h"
 #include "mpi.h"
 
 
