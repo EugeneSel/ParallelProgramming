@@ -35,4 +35,5 @@ private:
     position_t m_position;
 };
 
+
 #endif

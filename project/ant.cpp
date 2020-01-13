@@ -53,7 +53,7 @@ void ant::advance( pheromone& phen, const fractal_land& land, const position_t& 
             }
             unset_loaded( );
         }
-        if ( get_position( ) == pos_food ) {
+        if (get_position( ) == pos_food) {
             set_loaded( );
         }
     }

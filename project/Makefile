@@ -3,7 +3,6 @@ include ../Make.inc
 MPIFLGS = `mpicxx -showme:compile` -DUSE_MPI
 MPILNK  = `mpicxx -showme:link` -DUSE_MPI
 
-
 SRC_DIR = .
 INCL_DIR = $(PROJECT_ROOT)/include
 OBJ_DIR = build

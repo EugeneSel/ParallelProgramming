@@ -82,9 +82,9 @@ int main(int nargs, char* argv[])
     // On va créer des fourmis un peu partout sur la carte :
     std::vector<ant> ants;
     ants.reserve(nb_ants);
-    std::random_device                       rd;  // Will be used to obtain a seed for the random number engine
-    std::mt19937                             gen(20);  // Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<size_t>    ant_pos( 0, land.dimensions()-1 );
+    std::random_device rd;  // Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(20);  // Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<size_t> ant_pos( 0, land.dimensions()-1 );
     for ( size_t i = 0; i < nb_ants; ++i )
         ants.push_back({{ant_pos(gen),ant_pos(gen)}});
     // On crée toutes les fourmis dans la fourmilière.

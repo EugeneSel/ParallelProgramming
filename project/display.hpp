@@ -30,5 +30,4 @@ private:
     std::vector<gui::point> land_points;
 };
 
-
 #endif

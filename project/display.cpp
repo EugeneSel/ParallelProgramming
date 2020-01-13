@@ -46,8 +46,8 @@ void display_t::display( const std::size_t& compteur ) {
     // Affichage des phéronomes dans le cadran en haut à droite :
     std::vector< gui::point > m_p_phen;
     m_p_phen.reserve( m_ref_land.dimensions( ) * m_ref_land.dimensions( ) );
-    for ( fractal_land::dim_t i = 0; i < m_ref_land.dimensions( ); ++i )
-        for ( fractal_land::dim_t j = 0; j < m_ref_land.dimensions( ); ++j ) {
+    for (fractal_land::dim_t i = 0; i < m_ref_land.dimensions( ); ++i)
+        for (fractal_land::dim_t j = 0; j < m_ref_land.dimensions( ); ++j) {
             m_p_phen.push_back( gui::point(
                 i+ m_ref_land.dimensions( ) + 10, j, 0, gui::color::rgba( {std::min( 1., (double)m_ref_phen( i, j )[0] ),
                     std::min((double)m_ref_phen( i, j )[1], 1.),  0.} ) ) );

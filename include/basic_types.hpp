@@ -10,5 +10,4 @@ inline bool operator == ( const position_t& pos1, const position_t& pos2 )
 
 using dimension_t=std::pair<std::size_t,std::size_t>;
 
-
 #endif

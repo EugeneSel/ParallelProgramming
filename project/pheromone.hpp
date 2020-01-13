@@ -15,7 +15,7 @@
  */
 class pheromone {
 public:
-    using size_t      = unsigned long;
+    using size_t = unsigned long;
     using pheromone_t = std::array< double, 2 >;
 
     /**
