@@ -98,10 +98,10 @@ public:
         {
             m_buffer_pheromone[( i + 1 ) * m_stride + ( j + 1 )][0] =
                 m_alpha * std::max( {v1_left, v1_right, v1_upper, v1_bottom} ) +
-                ( 1 - m_alpha ) * 0.25 * ( v1_left + v1_right + v1_upper + v1_bottom );
+                (1 - m_alpha) * 0.25 * (v1_left + v1_right + v1_upper + v1_bottom);
             m_buffer_pheromone[( i + 1 ) * m_stride + ( j + 1 )][1] =
                 m_alpha * std::max( {v2_left, v2_right, v2_upper, v2_bottom} ) +
-                ( 1 - m_alpha ) * 0.25 * ( v2_left + v2_right + v2_upper + v2_bottom );
+                (1 - m_alpha) * 0.25 * (v2_left + v2_right + v2_upper + v2_bottom);
         }
     }
 

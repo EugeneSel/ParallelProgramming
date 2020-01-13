@@ -18,7 +18,6 @@ SRCS = \
 OBJS = \
 	$(OBJ_DIR)/fractal_land.o $(OBJ_DIR)/ant.o $(OBJ_DIR)/display.o
 
-
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(OBJ_DIR)
 	@echo "\033[33m Compiling " $@ "\033[0m"

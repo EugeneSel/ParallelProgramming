@@ -48,7 +48,7 @@ void ant::advance( pheromone& phen, const fractal_land& land, const position_t& 
         phen.mark_pheromone( new_pos_ant );
         m_position = new_pos_ant;
         if ( get_position( ) == pos_nest ) {
-            if ( is_loaded( ) ) {
+            if (is_loaded( )) {
                 cpteur_food += 1;
             }
             unset_loaded( );

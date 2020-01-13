@@ -40,10 +40,10 @@ public:
     fractal_land( fractal_land&& land ) = default;
     ~fractal_land() = default;
 
-    double operator () ( unsigned long i, unsigned long j ) const {
+    double operator () (unsigned long i, unsigned long j) const {
         return m_altitude[i+j*m_dimensions];
     }
-    double& operator () ( unsigned long i, unsigned long j ) {
+    double& operator () (unsigned long i, unsigned long j) {
         return m_altitude[i+j*m_dimensions];
     }
     dim_t dimensions() const { return m_dimensions; }

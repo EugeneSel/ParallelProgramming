@@ -8,11 +8,11 @@
 
 display_t::display_t( const fractal_land& land, const pheromone& phen, const position_t& pos_nest,
                       const position_t& pos_food, const std::vector< ant >& ants, gui::window& win )
-    : m_ref_land( land ),
-      m_ref_phen( phen ),
-      m_pos_nest( pos_nest ),
-      m_pos_food( pos_food ),
-      m_ref_ants( ants ),
+    : m_ref_land(land),
+      m_ref_phen(phen),
+      m_pos_nest(pos_nest),
+      m_pos_food(pos_food),
+      m_ref_ants(ants),
       m_curve( ),
       m_ref_win( win ),
       land_points( ) {

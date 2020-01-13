@@ -99,7 +99,13 @@ int main(int nargs, char* argv[]) {
     // Génération du territoire 256 x 256 ( 2*(2^7) par direction )
     fractal_land land(7,2,1.,512);
 
-    MPI_Init(&nargs, &argv);
+    int provided;
+    MPI_Init_thread(&nargs, &argv, MPI_THREAD_SINGLE, &provided);
+    if(provided < MPI_THREAD_SINGLE) {
+        printf("The threading support level is lesser than that demanded.\n");
+        MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
+        return EXIT_FAILURE;
+    }
     
     int rank, process_number;
 
