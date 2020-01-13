@@ -43,8 +43,8 @@ fractal_land::fractal_land( const dim_t& ln2_dim, unsigned long nbSeeds, double 
 
     fractal_land& cur_land = *this;
     // Calcul des points initiaux :
-    for ( dim_t i = 0; i < m_dimensions; i += dim_ss_grid )
-        for ( dim_t j = 0; j < m_dimensions; j += dim_ss_grid )
+    for (dim_t i = 0; i < m_dimensions; i += dim_ss_grid)
+        for (dim_t j = 0; j < m_dimensions; j += dim_ss_grid)
             cur_land(i,j) = random_alt();
     // Puis on itère pour calculer le paysage fractal :
     dim_t ldim = ln2_dim;

@@ -16,7 +16,7 @@ struct display_t
     display_t(const display_t& ) = delete;
     ~display_t()=default;
 
-    void display( const std::size_t& compteur );
+    void display(const std::size_t& compteur);
 private:
     struct graph_context;
     const fractal_land& m_ref_land;

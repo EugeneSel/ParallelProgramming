@@ -33,14 +33,14 @@ void advance_time( const fractal_land& land, pheromone& phen,
 
     // parallel OMP static default:
     # ifdef _OMP_static_
-    #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static) reduction(+:cpteur)
     for ( size_t i = 0; i < ants.size(); ++i )
         ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
     # endif
 
     // parallel OMP dynamic default:
     # ifdef _OMP_dynamic_
-    #pragma omp parallel for schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic) reduction(+:cpteur)
     for ( size_t i = 0; i < ants.size(); ++i )
         ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
     # endif
@@ -52,7 +52,7 @@ void advance_time( const fractal_land& land, pheromone& phen,
     # pragma omp parallel shared(number_of_threads)
     {
         number_of_threads = omp_get_num_threads();
-        # pragma omp for schedule(static, number_of_ants / number_of_threads)
+        # pragma omp for schedule(static, number_of_ants / number_of_threads) reduction(+:cpteur)
         for ( size_t i = 0; i < number_of_ants; ++i )
             ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
     }
@@ -65,7 +65,7 @@ void advance_time( const fractal_land& land, pheromone& phen,
     # pragma omp parallel shared(number_of_threads)
     {
         number_of_threads = omp_get_num_threads();
-        # pragma omp for schedule(dynamic, number_of_ants / number_of_threads)
+        # pragma omp for schedule(dynamic, number_of_ants / number_of_threads) reduction(+:cpteur)
         for ( size_t i = 0; i < number_of_ants; ++i )
             ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
     }
@@ -84,8 +84,7 @@ void advance_time( const fractal_land& land, pheromone& phen,
     phen.update();
 }
 
-int main(int nargs, char* argv[])
-{
+int main(int nargs, char* argv[]) {
     // chronometre:
     chrono::time_point<std::chrono::system_clock> start, end, start_general, end_general;
     chrono::duration<double> elapsed_seconds;
