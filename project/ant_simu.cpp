@@ -81,14 +81,8 @@ void advance_time( const fractal_land& land, pheromone& phen,
     cout << "Advance time: " << elapsed_seconds.count() << endl;
     # endif
 
-    // end clock:
-    end = chrono::system_clock::now();
-
-    // count the difference:
-    # ifdef _clock_advance_
-    elapsed_seconds = end - start;
-    cout << "Advance time: " << elapsed_seconds.count() << endl;
-    # endif
+    phen.do_evaporation();
+    phen.update();
 }
 
 int main(int nargs, char* argv[]) {
