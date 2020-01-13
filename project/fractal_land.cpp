@@ -48,8 +48,7 @@ fractal_land::fractal_land( const dim_t& ln2_dim, unsigned long nbSeeds, double 
             cur_land(i,j) = random_alt();
     // Puis on itère pour calculer le paysage fractal :
     dim_t ldim = ln2_dim;
-    while (ldim > 1)
-    {
+    while (ldim > 1) {
         ldim -= 1;
         dim_ss_grid /= 2;
         nbSeeds *= 2;

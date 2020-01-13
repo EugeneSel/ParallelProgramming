@@ -9,7 +9,7 @@ CXX = mpic++
 DEBUGOPT = -g -Wall -pedantic -fopenmp
 OPTIMOPT = -O2 -march=native -fopenmp
 
-CXXOPT = -std=c++11 -fPIC $(DEBUGOPT)
+CXXOPT = -std=c++11 -fPIC $(OPTIMOPT)
 
 MPIROOT    = /usr/lib/openmpi
 

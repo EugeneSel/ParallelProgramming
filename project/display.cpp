@@ -42,7 +42,7 @@ void display_t::display( const std::size_t& compteur ) {
         const position_t& pos_ant = ant.get_position( );
         m_p_ants.push_back( gui::point( pos_ant.first, pos_ant.second, 0, gui::color::rgba( {0, 255, 255, 128} ) ) );
     }
-    gui::draw( m_p_ants );
+    gui::draw(m_p_ants);
     // Affichage des phéronomes dans le cadran en haut à droite :
     std::vector< gui::point > m_p_phen;
     m_p_phen.reserve( m_ref_land.dimensions( ) * m_ref_land.dimensions( ) );

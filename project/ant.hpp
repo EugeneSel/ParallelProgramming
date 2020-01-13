@@ -16,7 +16,7 @@ public:
     ant(const position_t& pos) : m_state(unloaded), m_position(pos)
     {} 
     ant(const ant& a) = default;
-    ant( ant&& a ) = default;
+    ant(ant&& a) = default;
     ~ant() = default;
 
     void set_loaded() { m_state = loaded; }

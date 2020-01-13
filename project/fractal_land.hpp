@@ -51,7 +51,7 @@ public:
     const double* data() const { return m_altitude.data(); }
 
 private:
-    void compute_subgrid( int log_subgrid_dim, int iB, int jB, double deviation, std::mt19937& gen );
+    void compute_subgrid(int log_subgrid_dim, int iB, int jB, double deviation, std::mt19937& gen);
     dim_t m_dimensions;
     container m_altitude;
 };

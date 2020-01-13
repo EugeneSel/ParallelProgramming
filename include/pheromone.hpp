@@ -101,7 +101,7 @@ public:
     }
 
     void update( ) {
-        m_map_of_pheromone.swap( m_buffer_pheromone );
+        m_map_of_pheromone.swap(m_buffer_pheromone);
         cl_update( );
         m_map_of_pheromone[( m_pos_food.first + 1 ) * m_stride + m_pos_food.second + 1][0] = 1;
         m_map_of_pheromone[( m_pos_nest.first + 1 ) * m_stride + m_pos_nest.second + 1][1] = 1;

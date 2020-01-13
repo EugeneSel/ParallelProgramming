@@ -64,7 +64,6 @@ int main(int nargs, char* argv[]) {
 
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &process_number);
-    MPI_Status status;
 
     if (rank == 0) {
         // On va créer des fourmis un peu partout sur la carte :
@@ -96,8 +95,8 @@ int main(int nargs, char* argv[]) {
 
         double max_val = 0.0;
         double min_val = 0.0;
-        for ( fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
-            for ( fractal_land::dim_t j = 0; j < land.dimensions(); ++j ) {
+        for (fractal_land::dim_t i = 0; i < land.dimensions(); ++i )
+            for (fractal_land::dim_t j = 0; j < land.dimensions(); ++j ) {
                 max_val = std::max(max_val, land(i,j));
                 min_val = std::min(min_val, land(i,j));
             }
@@ -166,7 +165,7 @@ int main(int nargs, char* argv[]) {
             MPI_Recv(buffer.data(), buffer.size(), MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
             food_quantity = buffer[0];
-            for (unsigned i = 1, j = 0; i <= ants.size() * 2; i+=2, ++j) {
+            for (unsigned i = 1, j = 0; i < ants.size() * 2; i+=2, ++j) {
                 ants[j].set_position(buffer[i], buffer[i + 1]);
             }
 
@@ -201,16 +200,16 @@ int main(int nargs, char* argv[]) {
         for ( ; ; ) {
             buffer.clear();
 
-            buffer.push_back(food_quantity);
+            buffer.emplace_back(food_quantity);
             for (unsigned i = 0; i < ants.size(); i++) {
-                buffer.push_back(ants[i].get_position().first);
-                buffer.push_back(ants[i].get_position().second);
+                buffer.emplace_back(ants[i].get_position().first);
+                buffer.emplace_back(ants[i].get_position().second);
             }
 
             for (unsigned i = 0; i < land.dimensions(); i++)
                 for (unsigned j = 0; j < land.dimensions(); j++) {
-                    buffer.push_back((double) phen(i, j)[0]);
-                    buffer.push_back((double) phen(i, j)[1]);
+                    buffer.emplace_back((double) phen(i, j)[0]);
+                    buffer.emplace_back((double) phen(i, j)[1]);
                 }
 
             MPI_Request request;
