@@ -120,9 +120,7 @@ public:
                 m_map_of_pheromone[i * m_stride + j][1] = new_map[k + 1];
 
                 k += 2;
-            } 
-
-        cout << m_dim << endl;    
+            }
     }
 
 private:
