@@ -64,6 +64,10 @@ public:
       return m_map_of_pheromone[index(pos)];
     }
 
+    const vector<pheromone_t> get_m_map_of_pheromone() {
+        return m_map_of_pheromone;
+    } 
+
     void do_evaporation( ) {
         for ( std::size_t i = 1; i <= m_dim; ++i )
             for ( std::size_t j = 1; j <= m_dim; ++j ) {
