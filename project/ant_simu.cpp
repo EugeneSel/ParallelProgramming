@@ -31,7 +31,7 @@ void advance_time( const fractal_land& land, pheromone& phen,
     // start clock:
     start = chrono::system_clock::now();
 
-    for ( size_t i = 0; i < ants.size(); ++i )
+    for (size_t i = 0; i < ants.size(); ++i)
         ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
 
     // end clock:
@@ -81,6 +81,7 @@ int main(int nargs, char* argv[]) {
         ranks_advance[i - 1] = i;
 
     // Initialize groups with their ranks:
+    MPI_Comm_group(MPI_COMM_WORLD, &world_group);
     if (rank == 1 || rank == 0) {
         MPI_Group_incl(world_group, 2, ranks_display_advance, &group_display_advance);
         MPI_Comm_create_group(MPI_COMM_WORLD, group_display_advance, 0, &comm_display_advance);
@@ -109,7 +110,7 @@ int main(int nargs, char* argv[]) {
         MPI_Recv(buffer.data(), buffer.size(), MPI_DOUBLE, 1, MPI_ANY_TAG, comm_display_advance, &status);
 
         food_quantity = buffer[0];
-        for (unsigned i = 1; i <= nb_ants * 2; i+=2) {
+        for (unsigned i = 1; i < nb_ants * 2; i+=2) {
             ants.emplace_back(position_t(buffer[i], buffer[i+1]));
         }
 
@@ -226,11 +227,13 @@ int main(int nargs, char* argv[]) {
         pheromone phen(land.dimensions(), pos_food, pos_nest, alpha, beta);
 
         // message buffers:
-        vector<double> buffer, ants_buffer, ants_buffer_recv, pher_buffer_recv;
+        vector<double> buffer, ants_buffer, pher_buffer, ants_buffer_recv, pher_buffer_recv;
         int food_quantity_buffer;
 
         for ( ; ; ) {
+            buffer.clear();
             ants_buffer.clear();
+            pher_buffer.clear();
             ants_buffer_recv.clear();
             pher_buffer_recv.clear();
 
@@ -243,10 +246,15 @@ int main(int nargs, char* argv[]) {
                 vector<double> (2 * nb_ants).swap(ants_buffer_recv);
 
             vector<double>(2 * land.dimensions() * land.dimensions()).swap(pher_buffer_recv);
+            for (unsigned i = 0; i < land.dimensions(); i++)
+                for (unsigned j = 0; j < land.dimensions(); j++) {
+                    pher_buffer.emplace_back((double) phen(i, j)[0]);
+                    pher_buffer.emplace_back((double) phen(i, j)[1]);
+                }
 
             MPI_Reduce(&food_quantity, &food_quantity_buffer, 1, MPI_INT, MPI_SUM, 0, comm_advance);
             MPI_Gather(ants_buffer.data(), ants_buffer.size(), MPI_DOUBLE, ants_buffer_recv.data(), ants_buffer.size(), MPI_DOUBLE, 0, comm_advance);
-            MPI_Allreduce(phen.get_m_map_of_pheromone().data(), pher_buffer_recv.data(), 2 * land.dimensions() * land.dimensions(), MPI_DOUBLE, MPI_MAX, comm_advance);
+            MPI_Allreduce(pher_buffer.data(), pher_buffer_recv.data(), 2 * land.dimensions() * land.dimensions(), MPI_DOUBLE, MPI_MAX, comm_advance);
             phen.update_map(vector<double> (pher_buffer_recv));
 
             if (rank == 1) {
