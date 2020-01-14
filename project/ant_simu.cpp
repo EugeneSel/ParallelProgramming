@@ -22,7 +22,7 @@
 
 void advance_time( const fractal_land& land, pheromone& phen, 
                    const position_t& pos_nest, const position_t& pos_food,
-                   std::vector<ant>& ants, std::size_t& cpteur )
+                   std::vector<ant>& ants, std::size_t& cpteur)
 {
     // chronometre:
     chrono::time_point<std::chrono::system_clock> start, end;
@@ -218,7 +218,7 @@ int main(int nargs, char* argv[]) {
         // For each process we have its own number of ants:
         ants.reserve(nb_ants_process);
         std::random_device rd;  // Will be used to obtain a seed for the random number engine
-        std::mt19937 gen(20);  // Standard mersenne_twister_engine seeded with rd()
+        std::mt19937 gen(rd());  // Standard mersenne_twister_engine seeded with rd()
         std::uniform_int_distribution<size_t> ant_pos(0, land.dimensions() - 1);
         for (size_t i = 0; i < nb_ants_process; ++i)
             ants.push_back({{ant_pos(gen),ant_pos(gen)}});
@@ -231,7 +231,6 @@ int main(int nargs, char* argv[]) {
         int food_quantity_buffer;
 
         for ( ; ; ) {
-            buffer.clear();
             ants_buffer.clear();
             pher_buffer.clear();
             ants_buffer_recv.clear();

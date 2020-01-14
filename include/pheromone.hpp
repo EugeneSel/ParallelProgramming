@@ -121,6 +121,8 @@ public:
 
                 k += 2;
             } 
+
+        cout << m_dim << endl;    
     }
 
 private:
