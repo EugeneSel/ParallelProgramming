@@ -175,7 +175,7 @@ int main(int nargs, char* argv[]) {
             cout << "Display time: " << elapsed_seconds.count() << endl;
             # endif
 
-            if (food_quantity >= 1000) {
+            if (food_quantity >= 10000) {
                 // end general clock:
                 end_general = chrono::system_clock::now();
 
