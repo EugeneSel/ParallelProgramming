@@ -151,7 +151,7 @@ int main(int nargs, char* argv[]) {
             cout << "Display time: " << elapsed_seconds.count() << endl;
             # endif
 
-            if (food_quantity >= 10) {
+            if (food_quantity >= 100) {
                 // end general clock:
                 end_general = chrono::system_clock::now();
 
@@ -173,6 +173,7 @@ int main(int nargs, char* argv[]) {
             }
 
             phen.update_map(vector<double> (buffer.begin() + 1 + 2 * ants.size(), buffer.end()));
+       
         }); 
 
         // loop this algorithm:
@@ -189,7 +190,7 @@ int main(int nargs, char* argv[]) {
         std::vector<ant> ants;
         ants.reserve(nb_ants);
         std::random_device rd;  // Will be used to obtain a seed for the random number engine
-        std::mt19937 gen(rd());  // Standard mersenne_twister_engine seeded with rd()
+        std::mt19937 gen(20);  // Standard mersenne_twister_engine seeded with rd()
         std::uniform_int_distribution<size_t> ant_pos( 0, land.dimensions()-1 );
         for ( size_t i = 0; i < nb_ants; ++i )
             ants.push_back({{ant_pos(gen),ant_pos(gen)}});
