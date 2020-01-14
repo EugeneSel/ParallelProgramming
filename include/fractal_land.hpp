@@ -55,4 +55,5 @@ private:
     dim_t m_dimensions;
     container m_altitude;
 };
+
 #endif

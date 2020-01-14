@@ -52,8 +52,8 @@ fractal_land::fractal_land( const dim_t& ln2_dim, unsigned long nbSeeds, double 
         ldim -= 1;
         dim_ss_grid /= 2;
         nbSeeds *= 2;
-        for ( unsigned long iB = 0; iB < nbSeeds; ++iB )
-            for ( unsigned long jB = 0; jB < nbSeeds; ++jB )
+        for (unsigned long iB = 0; iB < nbSeeds; ++iB)
+            for (unsigned long jB = 0; jB < nbSeeds; ++jB)
                compute_subgrid( ldim, iB, jB, deviation, gen);                
     }
 }

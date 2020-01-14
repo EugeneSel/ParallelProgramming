@@ -137,7 +137,7 @@ int main(int nargs, char* argv[]) {
 
         gui::context graphic_context(nargs, argv);
         gui::window& win =  graphic_context.new_window(2*land.dimensions()+10,land.dimensions()+266);
-        display_t displayer( land, phen, pos_nest, pos_food, ants, win );
+        display_t displayer(land, phen, pos_nest, pos_food, ants, win);
 
         gui::event_manager manager;
         // start general clock: 

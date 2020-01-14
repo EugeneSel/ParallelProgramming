@@ -121,8 +121,6 @@ public:
 
                 k += 2;
             } 
-        
-
     }
 
 private:

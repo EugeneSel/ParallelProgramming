@@ -13,10 +13,10 @@ display_t::display_t( const fractal_land& land, const pheromone& phen, const pos
       m_pos_nest( pos_nest ),
       m_pos_food( pos_food ),
       m_ref_ants( ants ),
-      m_curve( ),
-      m_ref_win( win ),
-      land_points( ) {
-    m_curve.reserve( 50000 );
+      m_curve(),
+      m_ref_win(win),
+      land_points() {
+    m_curve.reserve(50000);
     land_points.reserve( 512 * 522 );
     // Affichage premier cadran et second cadran du paysage
     for ( fractal_land::dim_t i = 0; i < m_ref_land.dimensions( ); ++i )
