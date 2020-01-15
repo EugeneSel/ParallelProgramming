@@ -16,7 +16,7 @@
 
 using namespace std;
 
-# define _OMP_static_
+# define _OMP_display_advance_
 // # define _clock_advance_
 // # define _clock_display_
 
@@ -30,6 +30,23 @@ void advance_time( const fractal_land& land, pheromone& phen,
 
     // start clock:
     start = chrono::system_clock::now();
+
+    # ifdef _OMP_display_advance_
+    # pragma omp parallel reduction(+:cpteur)
+    {
+        if (omp_get_thread_num() != 0) {
+            int thread_num = omp_get_thread_num() - 1;
+            int number_of_threads = omp_get_num_threads() - 1;
+            int block_size = ants.size() / number_of_threads;
+
+            int start = thread_num * block_size;
+            int end = start + block_size;
+
+            for (size_t i = start; i < end; ++i)
+                ants[i].advance(phen, land, pos_food, pos_nest, cpteur);
+        }
+    }
+    # endif
 
     // parallel OMP static default:
     # ifdef _OMP_static_
@@ -156,12 +173,22 @@ int main(int nargs, char* argv[]) {
     manager.on_display([&] { displayer.display(food_quantity); win.blit(); });
     
     // when we want to advance:
-    manager.on_idle([&] () { 
+    manager.on_idle([&] () {
+
         advance_time(land, phen, pos_nest, pos_food, ants, food_quantity);
-        
+
         // start clock:
         start = chrono::system_clock::now();
-        displayer.display(food_quantity);        
+
+        # ifdef _OMP_display_advance_
+        # pragma omp master
+        {
+            displayer.display(food_quantity);
+        }
+        # else
+        displayer.display(food_quantity);
+        # endif
+
         // end clock:
         end = chrono::system_clock::now();
 
