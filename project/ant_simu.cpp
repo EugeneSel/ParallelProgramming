@@ -48,7 +48,7 @@ void advance_time( const fractal_land& land, pheromone& phen,
 }
 
 int main(int nargs, char* argv[]) {
-    const int nb_ants = 2000; // Nombre de fourmis
+    int nb_ants = 2000; // Nombre de fourmis
 
     const double alpha=0.7; // Coefficient de chaos
     const double beta=0.999; // Coefficient d'évaporation
@@ -75,6 +75,7 @@ int main(int nargs, char* argv[]) {
     int ranks_display_advance[2] = {0, 1};
     int ranks_advance[number_of_process - 1];
     int nb_ants_process = nb_ants / (number_of_process - 1);
+    nb_ants = nb_ants_process * (number_of_process - 1);
     const int buffer_size = 1 + 2 * nb_ants + 2 * land.dimensions() * land.dimensions();
 
     for (unsigned i = 1; i < number_of_process; i++)
@@ -254,7 +255,7 @@ int main(int nargs, char* argv[]) {
             MPI_Reduce(&food_quantity, &food_quantity_buffer, 1, MPI_INT, MPI_SUM, 0, comm_advance);
             MPI_Gather(ants_buffer.data(), ants_buffer.size(), MPI_DOUBLE, ants_buffer_recv.data(), ants_buffer.size(), MPI_DOUBLE, 0, comm_advance);
             MPI_Allreduce(pher_buffer.data(), pher_buffer_recv.data(), 2 * land.dimensions() * land.dimensions(), MPI_DOUBLE, MPI_MAX, comm_advance);
-            phen.update_map(vector<double> (pher_buffer_recv));
+            phen.update_map(pher_buffer_recv);
 
             if (rank == 1) {
                 buffer.clear();

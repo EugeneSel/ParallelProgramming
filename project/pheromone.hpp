@@ -114,8 +114,8 @@ public:
     void update_map(const vector<double>& new_map) {
         unsigned k = 0;
 
-        for (size_t i = 1; i <= m_dim; ++i)
-            for (size_t j = 1; j <= m_dim; ++j) {
+        for (size_t i = 0; i <= m_dim; ++i)
+            for (size_t j = 0; j <= m_dim; ++j) {
                 m_map_of_pheromone[i * m_stride + j][0] = new_map[k];
                 m_map_of_pheromone[i * m_stride + j][1] = new_map[k + 1];
 
