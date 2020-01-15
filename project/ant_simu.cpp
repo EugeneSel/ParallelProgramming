@@ -16,7 +16,7 @@
 
 using namespace std;
 
-# define _OMP_static_
+# define _OMP_dynamic_with_step_
 // # define _clock_advance_
 // # define _clock_display_
 
@@ -172,7 +172,7 @@ int main(int nargs, char* argv[]) {
         # endif
 
         // the end condition:
-        if (food_quantity >= 10) {
+        if (food_quantity >= 1000) {
             // end general clock:
             end_general = chrono::system_clock::now();
 
