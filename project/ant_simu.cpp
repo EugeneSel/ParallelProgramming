@@ -173,7 +173,6 @@ int main(int nargs, char* argv[]) {
             }
 
             phen.update_map(vector<double> (buffer.begin() + 1 + 2 * ants.size(), buffer.end()));
-       
         }); 
 
         // loop this algorithm:
