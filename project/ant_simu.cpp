@@ -151,7 +151,7 @@ int main(int nargs, char* argv[]) {
             cout << "Display time: " << elapsed_seconds.count() << endl;
             # endif
 
-            if (food_quantity >= 100) {
+            if (food_quantity >= 1000) {
                 // end general clock:
                 end_general = chrono::system_clock::now();
 
@@ -177,7 +177,7 @@ int main(int nargs, char* argv[]) {
 
         // loop this algorithm:
         manager.loop();
-    } else if (rank != 0) {
+    } else if (rank == 1) {
         const double eps = 0.8;  // Coefficient d'exploration
         // Compteur de la quantité de nourriture apportée au nid par les fourmis
         size_t food_quantity = 0;
