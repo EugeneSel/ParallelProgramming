@@ -133,7 +133,7 @@ int main(int nargs, char* argv[])
         # endif
 
         // the end condition:
-        if (food_quantity >= 10) {
+        if (food_quantity >= 1000) {
             // end general clock:
             end_general = chrono::system_clock::now();
 
