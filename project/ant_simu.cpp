@@ -16,7 +16,7 @@
 
 using namespace std;
 
-# define _OMP_dynamic_with_step_
+# define _OMP_static_
 // # define _clock_advance_
 // # define _clock_display_
 
